@@ -1,28 +1,29 @@
 import {
-  Entity,
+  BaseEntity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
-export class Task {
+@Entity({ name: 'tasks' })
+export class Task extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column({ type: 'varchar', length: 120, nullable: false })
   title: string;
 
-  @Column({ nullable: false })
+  @Column({ type: 'text', nullable: true })
   description: string;
 
-  @Column({ default: true })
+  @Column({ type: 'tinyint', default: true })
   isActive: boolean;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: 'timestamp', name: 'updated_at' })
   updatedAt: Date;
 }

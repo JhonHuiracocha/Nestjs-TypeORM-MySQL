@@ -36,12 +36,12 @@ export class TasksController {
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateTaskDto: UpdateTaskDto,
-  ) {
+  ): Promise<Task> {
     return this._tasksService.update(id, updateTaskDto);
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
+  delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this._tasksService.delete(id);
   }
 }
