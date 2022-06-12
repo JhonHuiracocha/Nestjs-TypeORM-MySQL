@@ -1,16 +1,17 @@
+import { Tweet } from '../../tweets/entities/tweet.entity';
 import {
-  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'users' })
-export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+export class User {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', length: 50, nullable: false })
   username: string;
@@ -21,11 +22,16 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', length: 70, nullable: false })
   password: string;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true })
   imgUrl: string;
 
   @Column({ type: 'tinyint', default: true })
-  isActive: boolean;
+  status: boolean;
+
+  @OneToMany(() => Tweet, (tweet) => tweet.user, {
+    nullable: false,
+  })
+  tweets: Tweet[];
 
   @CreateDateColumn({ type: 'timestamp', name: 'created_at' })
   createdAt: Date;

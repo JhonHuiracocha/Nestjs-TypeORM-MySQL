@@ -4,14 +4,13 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { UsersService } from './users.service';
-import { UpdateTaskDto } from '../tasks/dto/update-task.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -28,20 +27,20 @@ export class UsersController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number): Promise<User> {
+  findOne(@Param('id') id: string): Promise<User> {
     return this._usersService.findOne(id);
   }
 
   @Patch(':id')
   update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateTaskDto: UpdateTaskDto,
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return this._usersService.update(id, updateTaskDto);
+    return this._usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
-    return this._usersService.delete(id);
+  remove(@Param('id') id: string): Promise<void> {
+    return this._usersService.remove(id);
   }
 }
