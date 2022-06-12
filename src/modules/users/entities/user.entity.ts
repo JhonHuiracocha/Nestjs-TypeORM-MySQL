@@ -1,4 +1,3 @@
-import { Tweet } from '../../tweets/entities/tweet.entity';
 import {
   Column,
   CreateDateColumn,
@@ -7,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Tweet } from '../../tweets/entities/tweet.entity';
 
 @Entity({ name: 'users' })
 export class User {
