@@ -3,9 +3,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -31,17 +30,7 @@ export class Tweet {
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToMany(() => Hashtag, (hashtag) => hashtag.tweets, {
-    cascade: true,
-    nullable: false,
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-  })
-  @JoinTable({
-    name: 'tweet_hashtags',
-    joinColumn: { name: 'tweet_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'hashtag_id', referencedColumnName: 'id' },
-  })
+  @OneToMany(() => Hashtag, (hashtag) => hashtag.tweet, { cascade: true })
   hashtags: Hashtag[];
 
   @Column({ type: 'tinyint', default: true })

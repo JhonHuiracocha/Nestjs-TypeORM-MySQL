@@ -2,7 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToMany,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -16,8 +17,13 @@ export class Hashtag {
   @Column({ type: 'varchar', length: 45, nullable: false })
   content: string;
 
-  @ManyToMany(() => Tweet, (tweet) => tweet.hashtags)
-  tweets: Tweet[];
+  @ManyToOne(() => Tweet, (tweet) => tweet.hashtags, {
+    nullable: false,
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'tweet_id' })
+  tweet: Tweet;
 
   @Column({ type: 'tinyint', default: true })
   status: boolean;
