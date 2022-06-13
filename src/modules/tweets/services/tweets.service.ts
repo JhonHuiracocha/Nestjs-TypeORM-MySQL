@@ -27,7 +27,12 @@ export class TweetsService {
   }
 
   findTweetById(id: string): Observable<Tweet> {
-    return from(this._tweetsRepository.findOne({ where: { id } })).pipe(
+    return from(
+      this._tweetsRepository.findOne({
+        relations: { hashtags: true },
+        where: { id },
+      }),
+    ).pipe(
       map((tweet: Tweet) => {
         if (!tweet)
           throw new NotFoundException('The tweet has not been found.');
