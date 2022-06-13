@@ -3,13 +3,14 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
-import { TweetHashtag } from './tweet-hashtag.entity';
+import { Hashtag } from './hashtag.entity';
 
 @Entity({ name: 'tweets' })
 export class Tweet {
@@ -24,14 +25,24 @@ export class Tweet {
 
   @ManyToOne(() => User, (user) => user.tweets, {
     nullable: false,
-    onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @OneToMany(() => TweetHashtag, (tweetHashtag) => tweetHashtag.tweet)
-  hashtags: TweetHashtag[];
+  @ManyToMany(() => Hashtag, (hashtag) => hashtag.tweets, {
+    cascade: true,
+    nullable: false,
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  })
+  @JoinTable({
+    name: 'tweet_hashtags',
+    joinColumn: { name: 'tweet_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'hashtag_id', referencedColumnName: 'id' },
+  })
+  hashtags: Hashtag[];
 
   @Column({ type: 'tinyint', default: true })
   status: boolean;

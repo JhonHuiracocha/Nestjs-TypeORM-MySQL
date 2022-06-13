@@ -2,11 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { TweetHashtag } from './tweet-hashtag.entity';
+import { Tweet } from './tweet.entity';
 
 @Entity({ name: 'hashtags' })
 export class Hashtag {
@@ -15,9 +15,9 @@ export class Hashtag {
 
   @Column({ type: 'varchar', length: 45, nullable: false })
   content: string;
-  
-  @OneToMany(() => TweetHashtag, (tweetHashtag) => tweetHashtag.hashtag)
-  tweets: TweetHashtag[];
+
+  @ManyToMany(() => Tweet, (tweet) => tweet.hashtags)
+  tweets: Tweet[];
 
   @Column({ type: 'tinyint', default: true })
   status: boolean;

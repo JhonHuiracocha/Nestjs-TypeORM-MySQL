@@ -2,7 +2,6 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { User } from '../modules/users/entities/user.entity';
 import { Tweet } from '../modules/tweets/entities/tweet.entity';
 import { Hashtag } from '../modules/tweets/entities/hashtag.entity';
-import { TweetHashtag } from '../modules/tweets/entities/tweet-hashtag.entity';
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: 'mysql',
@@ -11,6 +10,6 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   username: 'root',
   password: 'root',
   database: 'nestjs-typeorm',
-  entities: [User, Tweet, Hashtag, TweetHashtag],
+  entities: [User, Tweet, Hashtag],
   synchronize: true,
 };

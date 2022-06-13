@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsObject, IsString } from 'class-validator';
 import { User } from '../../users/entities/user.entity';
+import { Hashtag } from '../entities/hashtag.entity';
 
 export class CreateTweetDto {
   @IsString()
@@ -13,4 +14,8 @@ export class CreateTweetDto {
   @IsObject()
   @IsNotEmpty()
   user: User;
+
+  @IsObject()
+  @IsNotEmpty()
+  hastags: Hashtag[];
 }
